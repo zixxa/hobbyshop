@@ -1,0 +1,34 @@
+{% spaceless %}
+{% load static %}
+{% load thumbnail %}
+{% load cms_tags %}
+{% endspaceless %}
+
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'css/style.css' %} {% endblock %}" />
+	<link rel="shortcut icon" type="image/png" href="/media/{% favicon %}"/>
+
+	<title>
+      {% block seotitle %} hobbystore - TEST ALPHA {% endblock %}
+  </title>
+
+  
+</head>
+<body>
+
+  <div class='main_content'> 
+    {% include 'includes/header.html'%}
+
+    {% include 'includes/nav.html'%}
+
+    {% include 'includes/footer.html'%}
+
+    {% block content %}{% endblock %}	
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block seotitle %}
+  {% if item.seo_title %} 
+    {{ item.seo_title }} - {{ block.super }} 
+  {% else %}
+    {{ item.title }} - {{ block.super }} 
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class='main_field flex_container container_item'>
+
+    <div class='info_field'>
+    
+      <h2 class='title_item'>
+        {{ item.title }}
+      </h2>
+
+      <div class='text_item'>
+        {{ item.description|safe }}
+      </div>
+
+    </div>
+    <div class='look_item'>
+        <div class = 'big_image'>
+          {% thumbnail item.image "300x300" crop="center" as im %}
+            <a href='{% url 'content_item' item.slug %}'>
+              <img src="{{im.url}}" width="{{im.width}}" height="{{im.height}}">
+            </a>
+          {% endthumbnail %}
+        </div>
+          <p class='price_field'>
+            Цена:
+            <p class='price_value'>USD ${{item.price}}</p>
+          </p>
+      </div>
+
+  </div>
+{% endblock %}

@@ -1,0 +1,193 @@
+@font-face{
+  font-family:"PTSansCaptionRegular";
+  src: url("/static/fonts/PTSansCaption-Regular.ttf") format("truetype");
+}
+
+html {
+  box-sizing: border-box;
+}*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+
+*{
+	margin: 0;
+	padding: 0;
+  color:white;
+  font-family:"PTSansCaptionRegular";
+}
+
+body {
+  background:#292929;
+}
+
+h2 {
+  font-size:42pt;
+  margin:0;
+  padding:0;
+}
+
+div {
+  font-size:16pt;
+}
+
+input {
+  color: #333;
+	margin: 0;
+  padding: 5px;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  width: 200px;
+  border-bottom: 0.3rem solid transparent;
+  transition: all 0.3s;
+
+}
+
+button {
+  margin:20px 0px;
+  border:5px solid #999999;
+  height:60px;
+  width:190px;
+  background:#424242;
+}
+
+a {
+  text-decoration:none;
+}
+
+.header{
+  padding:0;
+  width:100%;
+  height:100px;
+  display:flex;
+  position:absolute;
+  background:#1C1C1C;
+}
+.footer__block{
+  bottom:0;
+  padding:0;
+  width:100%;
+  height:100px;
+  display:flex;
+  position:absolute;
+  background:#1C1C1C;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer__block a{
+  padding:10px;
+}
+
+.nav_bar{
+  padding:0;
+  width:100px;
+  height:100%;
+  display:flex;
+  position:absolute;
+  flex-direction:column;
+  align-items: center;
+  background:#1C1C1C;
+}
+
+.menu_buttons{
+  padding:0;
+  margin:50;
+  margin-top:150px;
+}
+.menu_buttons img{
+  margin:10px;
+
+}
+
+.main_field{
+  margin:150px;
+  width:calc(100% - 300px);
+  padding:0px;
+  position:absolute;
+}
+
+.flex_container{
+  display:flex;
+}
+
+.market_list{ 
+  height:calc(100% - 300px);
+  flex-wrap: wrap;
+  flex-direction:row;
+  justify-content: center;
+}
+
+.container_item{
+}
+
+.info_field{
+  width:1000px;
+  display:block;
+}
+
+.big_image{
+  right:100px;
+}
+
+
+.market_item{ 
+  margin:10px;
+  width: 300px;
+  height: 370px;
+  padding:0px;
+  background:red;
+}
+.market_title{
+  font-size:16pt;
+}
+
+.price_field{
+ padding-top:5px; 
+}
+
+.price_value{
+  font-size:40pt;
+}
+
+.logo{
+  top:25px;
+  position:absolute;
+  left:100px;
+}
+
+.user{
+  top:30px;
+  position:absolute;
+  right:100px;
+}
+
+.register_content{
+  top:100px;
+  left:100px;
+  padding:30px;
+}
+
+.signup{
+  top:20px;
+  position:relative;
+}
+
+.signup__line{
+  margin-bottom:20px;
+}
+
+.signup__label{
+  top:4px;
+  position:relative;
+}
+
+.form__control{
+  left:300px;
+  position:absolute;
+}
+

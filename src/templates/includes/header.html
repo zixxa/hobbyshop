@@ -6,8 +6,13 @@
         <img class="logo__image" src="/media/{% logo %}" width="240" alt="Логотип сайта тест">
   </div>
   <div class="user">
-    <a href="{% url 'signup' %}">Регистрация</a>
-    <a href="{% url 'signin' %}">Войти</a>
+    {% if user.is_authenticated %}
+			<a href="{% url 'logout' %}">Выход</a>
+    {% else %}
+      <a href="{% url 'signup' %}">Регистрация</a>
+      <a href="{% url 'login' %}">Войти</a>
+    {% endif %}
+
   </div>
 
 </div>

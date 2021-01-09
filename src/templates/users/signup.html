@@ -4,7 +4,7 @@
 
 {% block content %}
   <div class="auth">
-    <h2>Регистрация</h2>
+    <h2 class="auth__action">Регистрация</h2>
     <form class="auth-form" action="{% url "signup" %}" method="post">
         {% csrf_token %}
         {% for field in form %}

@@ -5,17 +5,13 @@
 {% block content %}
   <div class="auth">
     <h2></h2>
-    <form class="auth-form" action="{% url "signin" %}" method="post">
+    <form class="auth-form" action="{% url "login" %}" method="post">
         {% csrf_token %}
-        {% for field in form %}
-          {% if field.name == "username" %}  
             <div class='auth__line'>
-              <span class='auth__label'>Имя пользователя </span>{{ field|add_class:"form__control"}}
+              <span class='auth__label'>Имя пользователя </span>{{ form.username|add_class:"form__control"}}
             </div>
-          {% endif %}
-          {% if field.name == "password1" %}    
             <div class='auth__line'>
-              <span class='auth__label'>Пароль </span>{{ field|add_class:"form__control"}}
+              <span class='auth__label'>Пароль </span>{{ form.password|add_class:"form__control"}}
             </div>
         <button type="submit">Войти</button>
     </form>

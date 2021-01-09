@@ -40,7 +40,7 @@ input {
   border-radius: 0.2rem;
   background-color: rgb(255, 255, 255);
   border: none;
-  width: 200px;
+  width: 300px;
   border-bottom: 0.3rem solid transparent;
   transition: all 0.3s;
 
@@ -107,8 +107,7 @@ a {
 .main-field{
   margin:0px;
   padding:0px;
-  height:100%;
-  width:100%;
+  height:calc(100%-90px;);
 }
 
 .content__container{
@@ -174,8 +173,12 @@ a {
 }
 
 .auth{
-  top:20px;
-  position:relative;
+  margin-top:50px;
+  margin-left:150px;
+}
+
+.auth__action{
+  margin-bottom:20px;
 }
 
 .auth__line{
@@ -188,7 +191,7 @@ a {
 }
 
 .form__control{
-  left:300px;
+  left:400px;
   position:absolute;
 }
 

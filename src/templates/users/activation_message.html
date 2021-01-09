@@ -1,0 +1,7 @@
+{% autoescape off %}
+Привет, {{ user.username }}!
+
+Ты регистрировался на сайте hobbyshop.ru? Тогда перейди по этой ссылке:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}

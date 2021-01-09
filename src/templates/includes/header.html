@@ -1,13 +1,13 @@
 {% load thumbnail %}
 {% load cms_tags %}
-<div class='header'>
+<div class="header">
 
-  <div class='logo'>
+  <div class="logo">
         <img class="logo__image" src="/media/{% logo %}" width="240" alt="Логотип сайта тест">
   </div>
-  <div class='user'>
-    <a href="{% url 'register' %}">Регистрация</a>
-    <a href="auth">Войти</a>
+  <div class="user">
+    <a href="{% url 'signup' %}">Регистрация</a>
+    <a href="{% url 'signin' %}">Войти</a>
   </div>
 
 </div>

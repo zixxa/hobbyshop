@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="auth">
+    <h2>Регистрация</h2>
+    <form class="auth-form" action="{% url "signup" %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          {% if field.name == "username" %}  
+            <div class='auth__line'>
+              <span class='auth__label'>Имя пользователя </span>{{ field|add_class:"form__control"}}
+            </div>
+          {% endif %}
+          {% if field.name == "password1" %}    
+            <div class='auth__line'>
+              <span class='auth__label'>Пароль </span>{{ field|add_class:"form__control"}}
+            </div>
+          {% endif %}
+          {% if field.name == "password2" %}    
+            <div class='auth__line'>
+              <span class='auth__label'>Повторите пароль</span>{{ field|add_class:"form__control"}}
+            </div>
+          {% endif %}
+          {% if field.name == "email" %}    
+            <div class='auth__line'>
+              <span class='auth__label'>Email</span>{{ field|add_class:"form__control"}}
+            </div>
+          {% endif %}
+        {% endfor %}
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+  </div>
+{% endblock %}
+

@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from src.users.forms import SignUpForm
 from django.contrib.auth.forms import UserCreationForm
 
-def register(request):
+def signup(request):
     if request.method == 'POST':
        form = SignUpForm(request.POST) 
        if form.is_valid():
@@ -20,4 +20,7 @@ def register(request):
     else:
         form = SignUpForm()
 
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'users/signup.html', {'form': form})
+
+def signin(request):
+   return redirect('/') 

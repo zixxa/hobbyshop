@@ -1,4 +1,5 @@
 .python-version
 manage.py
-local_setting.py
-local.py
+config/local_setting.py
+config/local.py
+src/media

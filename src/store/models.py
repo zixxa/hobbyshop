@@ -13,6 +13,7 @@ class Type(models.Model):
     def __str__(self):
         return self.name
 
+
 class Item (models.Model):
     articel = models.IntegerField('Артикул', blank=True, null=True)
     title = models.CharField('Название', max_length = 255) 

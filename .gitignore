@@ -12,3 +12,4 @@ src/media
 *.pyc
 *.db
 *.pid
+*.env

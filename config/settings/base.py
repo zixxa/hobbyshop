@@ -1,14 +1,27 @@
 import os
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+TEMPLATE_DEBUG=True
+environ.Env.read_env()
+
+DEBUG = env.bool('DEBUG', default=False)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+DATABASES = {
+    'default': env.db('DATABASE_URL'),
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v4p06#erjctiw(8_xsw493v&vjgm3g@lt8i7xoixk=*gr-d(09'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -16,7 +29,6 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'material.admin',
     'django.contrib.admin',
@@ -117,11 +129,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "../src/static/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "../src/media/")
 
 STATICFILES_DIRS = (
 )
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = '/'

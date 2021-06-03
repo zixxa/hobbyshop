@@ -9,7 +9,9 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'css/style.css' %} {% endblock %}" />
-	<link rel="shortcut icon" type="image/png" href="/media/{% favicon %}"/>
+  {% if favicon %}
+    <link rel="shortcut icon" type="image/png" href="/media/{% favicon %}"/>
+  {% endif %}
 
 	<title>
       {% block seotitle %} hobbystore - TEST ALPHA {% endblock %}

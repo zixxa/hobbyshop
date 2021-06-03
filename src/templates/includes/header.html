@@ -3,7 +3,9 @@
 <div class="header">
 
   <div class="logo">
-        <img class="logo__image" src="/media/{% logo %}" width="240" alt="Логотип сайта тест">
+  {% if logo %}
+    <img class="logo__image" src="/media/{% logo %}" width="240" alt="Логотип сайта тест">
+  {% endif %}
   </div>
   <div class="user">
     {% if user.is_authenticated %}

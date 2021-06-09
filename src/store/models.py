@@ -1,12 +1,14 @@
 from django.db import models
 from tinymce.models import HTMLField
 from pytils.translit import slugify
+from mptt.models import MPTTModel, TreeForeignKey
 import random
 
-class Type(models.Model):
+class Type(MPTTModel):
     name = models.CharField('Название', max_length=255)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
-    class Meta:
+    class MPTTMeta:
         verbose_name = 'Тип'
         verbose_name_plural='Типы'
 
@@ -16,16 +18,15 @@ class Type(models.Model):
 
 class Item (models.Model):
     articel = models.IntegerField('Артикул', blank=True, null=True)
-    title = models.CharField('Название', max_length = 255) 
-    image = models.ImageField('Изображение', upload_to='image/', null=False)
-    type = models.ForeignKey(Type, verbose_name='Тип', on_delete=models.CASCADE)
-    slug = models.SlugField('URL', max_length = 255, blank=True) 
-    description = HTMLField('Описание') 
+    title = models.CharField('Название', max_length = 255)
+    slug = models.SlugField('URL', max_length = 255, blank=True)
+    description = HTMLField('Описание')
     price = models.IntegerField(verbose_name='Цена', default=0, editable=True, blank=True, null=True)
-    active_on=models.BooleanField("Активная", default='False', null='False')
+    active_on = models.BooleanField("Активная", default='False', null='False')
+    itemtype = models.ForeignKey(Type, on_delete=models.CASCADE, null=True, blank=True)
 
-    seo_title = models.CharField('SEO Название', max_length = 255, blank=True, null=True) 
-    seo_description= models.CharField('SEO Описание', max_length = 255, blank=True, null=True) 
+    seo_title = models.CharField('SEO Название', max_length = 255, blank=True, null=True)
+    seo_description= models.CharField('SEO Описание', max_length = 255, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Товар'
@@ -34,8 +35,6 @@ class Item (models.Model):
     def save(self, *args, **kwargs):
         if not self.articel:
             self.get_articel()
-        super(Item,self).save(*args, **kwargs)
-
         if not self.slug:
             self.slug = slugify(self.title)
         super(Item,self).save(*args, **kwargs)
@@ -49,4 +48,5 @@ class Item (models.Model):
             return self.get_articel()
         else:
             self.articel = id
+        return self.articel
 

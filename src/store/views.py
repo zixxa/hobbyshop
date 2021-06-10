@@ -19,17 +19,19 @@ def index(request):
     items = Item.objects.filter(active_on=True)
     types= Type.objects.all
     content = {'items':items,
-               'types':types   
+               'types':types
                }
     return render(request, 'index.html', content)
 
 
 def item_page(request, item_slug):
     item = get_object_or_404(Item, slug=item_slug)
+    types= Type.objects.all
     item.save()
 
     content = {
         'item':item,
+        'types':types,
         'price':item.price
     }
     return render(request, 'products/new_item.html', content )

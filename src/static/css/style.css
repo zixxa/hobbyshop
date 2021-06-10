@@ -122,18 +122,23 @@ a {
   justify-content: center;
 }
 
-.container_item{
+.flex_container{
+    display:flex;
 }
 
 .info_field{
-  width:1000px;
-  display:block;
+    padding:40px;
+    flex:60%;
+  }
+
+.look_item{
+    padding:40px;
+    flex: 40%;
 }
 
 .big_image{
   right:100px;
 }
-
 
 .market_item{ 
   margin:10px;

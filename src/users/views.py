@@ -12,7 +12,7 @@ from .tokens import account_activation_token
 
 def signup(request):
     if request.method == 'POST':
-       form = SignUpForm(request.POST) 
+       form = SignUpForm(request.POST)
 
        if form.is_valid():
             user = form.save()
@@ -22,7 +22,7 @@ def signup(request):
             password = form.cleaned_data.get('password1')
 
             user.save()
-            user.is_active = False
+            user.is_active = True
 
             """ Отправляется письмо с активацией по email"""
             current_site = get_current_site(request)
@@ -39,7 +39,7 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'users/signup.html', {'form': form})
-   
+
 def activate(request, uidb64, token):
     """ Проверка на правильность токена """
     try:

@@ -1,8 +1,13 @@
 {% load static %}
 <div class='nav'> 
      <div class = 'menu_buttons'>
-        {% for type in types%}
+        {% for category in categories%}
+        {% if not category.parent %}
+        <a href='{% url 'parent_category' category.slug %}'>
           <img src="{% static 'images/round.png' %}" alt="testimg">
+        </a>
+        {% endif %}
+
         {% endfor %}
   </div>
 </div>

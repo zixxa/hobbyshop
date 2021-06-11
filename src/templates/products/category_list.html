@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content%}
+{% load thumbnail %}
+<section class="content__container market-list">
+    {% for category in subcategories %}
+        <div class='market_item'>
+            {% if category.image %}
+                {% thumbnail category.image "300x300" crop="center" as im %}
+                  <a href='{% url 'content_category' category.parent.slug category.slug %}'>
+                    <img src="{{im.url}}" width="{{im.width}}" height="{{im.height}}">
+                  </a>
+                {% endthumbnail %}
+            {% endif %}
+          <p class='market_title'>{{category.name}}<p>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

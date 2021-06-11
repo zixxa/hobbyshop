@@ -4,13 +4,20 @@ from pytils.translit import slugify
 from mptt.models import MPTTModel, TreeForeignKey
 import random
 
-class Type(MPTTModel):
+class Category(MPTTModel):
     name = models.CharField('Название', max_length=255)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    image = models.ImageField('Изображение', upload_to='image/', null=True, blank=True)
+    slug = models.SlugField('URL', max_length = 255, blank=True)
+    parent = TreeForeignKey('self', verbose_name='Родительская категория', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     class MPTTMeta:
-        verbose_name = 'Тип'
-        verbose_name_plural='Типы'
+        verbose_name = 'Категория'
+        verbose_name_plural='Категории'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Category,self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -23,8 +30,8 @@ class Item (models.Model):
     image = models.ImageField('Изображение', upload_to='image/', null=True)
     description = HTMLField('Описание')
     price = models.IntegerField(verbose_name='Цена', default=0, editable=True, blank=True, null=True)
-    active_on = models.BooleanField("Активная", default='False', null='False')
-    itemtype = models.ForeignKey(Type, on_delete=models.CASCADE, null=True, blank=True)
+    active_on = models.BooleanField('Активная', default='False', null='False')
+    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE, null=True, blank=True)
 
     seo_title = models.CharField('SEO Название', max_length = 255, blank=True, null=True)
     seo_description= models.CharField('SEO Описание', max_length = 255, blank=True, null=True)

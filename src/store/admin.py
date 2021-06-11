@@ -4,13 +4,13 @@ import os
 
 from django.contrib.admin import ModelAdmin, register
 from django.conf import settings
-from .models import Item, Type
+from .models import Item, Category
 
 @register(Item)
 class ItemAdmin(ModelAdmin):
-    list_display = ('title', 'slug', 'itemtype',)
+    list_display = ('title', 'slug', 'category',)
 
 
-@register(Type)
-class TypeAdmin(ModelAdmin):
+@register(Category)
+class CategoryAdmin(ModelAdmin):
     list_display = ('name', 'parent')

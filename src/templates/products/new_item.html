@@ -15,11 +15,12 @@
     <div class='info_field'>
     
       <h2 class='title_item'>
-        {{ item.title }}
+        {{ item.name}}
       </h2>
 
       <div class='text_item'>
         {{ item.description|safe }}
+          <a href="{% url 'cart_add' item.id %}">Добавить в корзину</a>
       </div>
 
     </div>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load cart_tag %}
+
+{% block content %}
+
+<div class='flex_container'>
+    <h2>Всего в корзине: {{request.session.cart|length}}</h2>
+    <div class='cart_list'>
+Состав:
+
+    {% for key,value in request.session.cart.items %}
+        <div class='cart_item'>
+            {{value.name}} {{value.price}} {{value.quantity}} 
+                <div>
+                    <img src={{value.image}} width=300 height=300> 
+                </div>
+            <p>Total {{ value.price|multiply:value.quantity }}</p>
+        </div>
+    {% endfor %}  
+
+    </div>
+</div>
+
+{% endblock %}

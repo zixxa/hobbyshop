@@ -13,3 +13,5 @@ src/media
 *.db
 *.pid
 *.env
+*.idea
+*.coverage

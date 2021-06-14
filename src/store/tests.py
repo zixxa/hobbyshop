@@ -6,8 +6,8 @@ class ItemsTestCase(TestCase):
         Category.objects.create(name='Мебель')
         Category.objects.create(name='Шкафы', parent=Category.objects.get(name='Мебель'))
         Category.objects.create(name='Стулья', parent=Category.objects.get(name='Мебель'))
-        Item.objects.create(title='Альфа', category=Category.objects.get(name='Стулья'))
-        Item.objects.create(title='Бета', category=Category.objects.get(name='Шкафы'))
+        Item.objects.create(name='Альфа', category=Category.objects.get(name='Стулья'))
+        Item.objects.create(name='Бета', category=Category.objects.get(name='Шкафы'))
 
     def test_categorys(self):
         category1 = Category.objects.get(name='Шкафы')
@@ -15,8 +15,8 @@ class ItemsTestCase(TestCase):
         parent = Category.objects.get(name='Мебель')
 
     def test_items(self):
-        chair = Item.objects.get(title='Альфа',category=Category.objects.get(name='Стулья'))
-        shelf = Item.objects.get(title='Бета', category=Category.objects.get(name='Шкафы'))
+        chair = Item.objects.get(name='Альфа',category=Category.objects.get(name='Стулья'))
+        shelf = Item.objects.get(name='Бета', category=Category.objects.get(name='Шкафы'))
 
         self.assertEqual(chair.__str__(), 'Альфа')
         self.assertTrue(chair.get_articel())

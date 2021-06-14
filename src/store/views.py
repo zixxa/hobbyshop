@@ -2,8 +2,10 @@ from django.shortcuts import render
 from src.store.models import Item, Category
 from src.store.serializer import ItemSerializer
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from cart.cart import Cart
 
 
 class ItemView(APIView):
@@ -57,3 +59,47 @@ def item_list(request, parent_slug, category_slug):
         'items':items,
     }
     return render(request, 'products/item_list.html', content)
+
+@login_required(login_url="/users/signin")
+def cart_add(request, id):
+    cart = Cart(request)
+    product = Item.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("/")
+
+
+@login_required(login_url="/users/signin")
+def item_clear(request, id):
+    cart = Cart(request)
+    product = Item.objects.get(id=id)
+    cart.remove(product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/users/signin")
+def item_increment(request, id):
+    cart = Cart(request)
+    product = Item.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/users/signin")
+def item_decrement(request, id):
+    cart = Cart(request)
+    product = Item.objects.get(id=id)
+    cart.decrement(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/users/signin")
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/users/signin")
+def cart_detail(request):
+    return render(request, 'products/cart_detail.html')
+

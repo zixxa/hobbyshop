@@ -25,7 +25,7 @@ class Category(MPTTModel):
 
 class Item (models.Model):
     articel = models.IntegerField('Артикул', blank=True, null=True)
-    title = models.CharField('Название', max_length = 255)
+    name = models.CharField('Название', max_length = 255)
     slug = models.SlugField('URL', max_length = 255, blank=True)
     image = models.ImageField('Изображение', upload_to='image/', null=True)
     description = HTMLField('Описание')

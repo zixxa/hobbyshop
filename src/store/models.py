@@ -44,11 +44,11 @@ class Item (models.Model):
         if not self.articel:
             self.get_articel()
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.name)
         super(Item,self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return self.name
 
     def get_articel(self):
         id = random.randint(1000000, 9000000)

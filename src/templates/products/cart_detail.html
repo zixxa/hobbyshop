@@ -4,20 +4,27 @@
 
 {% block content %}
 
-<div class='flex_container'>
-    <h2>Всего в корзине: {{request.session.cart|length}}</h2>
-    <div class='cart_list'>
-Состав:
+<div class='cart_list'>
+    <h2>Корзина</h2>
 
-    {% for key,value in request.session.cart.items %}
+<div class='cart_container'>
+        {% for key,value in request.session.cart.items %}
         <div class='cart_item'>
-            {{value.name}} {{value.price}} {{value.quantity}} 
-                <div>
-                    <img src={{value.image}} width=300 height=300> 
-                </div>
-            <p>Total {{ value.price|multiply:value.quantity }}</p>
+            <div class='cart_content'>
+                {{value.name}} {{value.price}} 
+                    <div>
+                        <img src={{value.image}} width=300 height=300> 
+                    </div>
+                <p>Цена {{ value.price|multiply:value.quantity }}</p>
+            </div>
+
+            <div class='cart_quanity'>
+                <p>Количество: {{value.quantity}} </p>
+                <a href="{% url 'item_increment' value.product_id %}">Добавить</a>
+                <a href="{% url 'item_decrement' value.product_id %}">Уменьшить</a>
+            </div>
         </div>
-    {% endfor %}  
+        {% endfor %}  
 
     </div>
 </div>

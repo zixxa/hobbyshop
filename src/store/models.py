@@ -10,7 +10,7 @@ class Category(MPTTModel):
     slug = models.SlugField('URL', max_length = 255, blank=True)
     parent = TreeForeignKey('self', verbose_name='Родительская категория', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
-    class MPTTMeta:
+    class Meta:
         verbose_name = 'Категория'
         verbose_name_plural='Категории'
 

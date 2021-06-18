@@ -60,6 +60,8 @@ def item_list(request, parent_slug, category_slug):
     }
     return render(request, 'products/item_list.html', content)
 
+''' Управление корзиной '''
+
 @login_required(login_url="/users/signin")
 def cart_add(request, id):
     cart = Cart(request)

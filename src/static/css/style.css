@@ -5,8 +5,8 @@
 
 html {
   box-sizing: border-box;
-  position:relative; 
   min-height:100%;
+  position:relative;
 }*,
 *:before,
 *:after {
@@ -15,8 +15,8 @@ html {
 
 
 *{
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
   color:white;
   font-family:"PTSansCaptionRegular";
 }
@@ -38,7 +38,7 @@ div {
 
 input {
   color: #333;
-	margin: 0;
+  margin: 0;
   padding: 5px;
   border-radius: 0.2rem;
   background-color: rgb(255, 255, 255);
@@ -78,12 +78,12 @@ a {
   margin-top: -100px;
   background:#1C1C1C;
   position:relative;
-}
-
-.footer-block a{
   flex-direction:row;
   justify-content: center;
   align-items: center;
+}
+
+.footer-block a{
   padding:10px;
 }
 
@@ -93,10 +93,8 @@ a {
   margin:0;
   padding:0;
   height:auto;
-  min-height: 100vh;
+  min-height:100%;
   background:#1C1C1C;
-  float:left; 
-  overflow:hidden;
 }
 
 .menu_buttons{
@@ -106,15 +104,11 @@ a {
 }
 .menu_buttons img{
   margin:10px;
-
 }
 
 .main-field{
-  margin:0px;
-  padding:0px;
   min-height:100%; 
   width:100%;
-  display:block;
   position:relative;
 }
 

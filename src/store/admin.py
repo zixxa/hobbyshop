@@ -8,10 +8,9 @@ from .models import Item, Category
 
 @register(Item)
 class ItemAdmin(ModelAdmin):
-    list_display = ('name', 'slug', 'category',)
-
+    list_display = ('name', 'articel', 'slug', 'category',)
 
 @register(Category)
 class CategoryAdmin(ModelAdmin):
-    list_display = ('name', 'parent')
+    list_display = ('name', 'parent', 'articel')
 

@@ -1,5 +1,6 @@
 from django.test import TestCase
 from src.store.models import Item, Category
+from django.http import HttpRequest
 
 class ItemsTestCase(TestCase):
     def setUp(self):

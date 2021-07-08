@@ -20,7 +20,6 @@
 
       <div class='text_item'>
         {{ item.description|safe }}
-          <a href="{% url 'cart_add' item.id %}">Добавить в корзину</a>
       </div>
 
     </div>
@@ -36,6 +35,7 @@
             Цена:
             <p class='price_value'>USD ${{item.price}}</p>
           </p>
+          <a href="{% url 'cart_add' item.id %}">Добавить в корзину</a>
       </div>
 
   </div>

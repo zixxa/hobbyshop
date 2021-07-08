@@ -19,7 +19,7 @@ class ItemView(APIView):
 
 def index(request):
     items = Item.objects.filter(active_on=True)
-    categories= Category.objects.all
+    categories = Category.objects.all
     content = {
             'items':items,
             'categories':categories
@@ -38,6 +38,7 @@ def item_page(request, item_slug):
     }
     return render(request, 'products/new_item.html', content)
 
+
 def category_list(request, parent_slug):
     parent = get_object_or_404(Category, slug=parent_slug)
     categories = Category.objects.all
@@ -48,6 +49,7 @@ def category_list(request, parent_slug):
         'subcategories':subcategories,
     }
     return render(request, 'products/category_list.html', content)
+
 
 def item_list(request, parent_slug, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
@@ -103,5 +105,10 @@ def cart_clear(request):
 
 @login_required(login_url="/users/signin")
 def cart_detail(request):
-    return render(request, 'products/cart_detail.html')
+    categories = Category.objects.all
+
+    content = {
+        'categories':categories,
+    }
+    return render(request, 'products/cart_detail.html', content)
 

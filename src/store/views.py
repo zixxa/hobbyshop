@@ -1,17 +1,16 @@
-from django.shortcuts import render
+from robokassa.forms import RobokassaForm
 from src.store.models import Item, Category
 from src.store.serializer import ItemSerializer
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from rest_framework.views import APIView
+from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from cart.cart import Cart
 
 
-class ItemView(APIView):
-    queryset = Item.objects.filter(active_on=True).values()
+class ItemViewSet(ViewSet):
 
-    def get(self, request):
+    def list(self, request):
         items = Item.objects.filter(active_on=True)
         serializer = ItemSerializer(items, many=True)
         return Response({"items": serializer.data})
@@ -112,3 +111,17 @@ def cart_detail(request):
     }
     return render(request, 'products/cart_detail.html', content)
 
+@login_required
+def pay_with_robokassa(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+
+    form = RobokassaForm(initial={
+               'OutSum': order.total,
+               'InvId': order.id,
+               'Desc': order.name,
+               'Email': request.user.email,
+               # 'IncCurrLabel': '',
+               # 'Culture': 'ru'
+           })
+
+    return render(request, 'pay_with_robokassa.html', {'form': form})

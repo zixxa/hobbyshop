@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'tinymce',
     'mptt',
-    'cart'
+    'cart',
+    'robokassa'
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,51 @@ TEMPLATES = [
 
 CART_SESSION_ID = 'cart'
 WSGI_APPLICATION = 'config.wsgi.application'
+
+ERROR_LOG = env.str('ERROR_LOG', default=(BASE_DIR + '/settings/errors.log'))
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'formatter': 'verbose',
+            'filename': ERROR_LOG
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+        'news': {
+            'handlers': ['console', 'file'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -119,6 +165,9 @@ STATICFILES_DIRS = (
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 LOGIN_REDIRECT_URL = '/'
 SITE_ID=1
+
+ROBOKASSA_LOGIN = 'test'
+ROBOKASSA_PASSWORD = '123'
+ROBOKASSA_PASSWORD1 = '123'

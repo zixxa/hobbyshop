@@ -1,127 +1,89 @@
-from robokassa.forms import RobokassaForm
+from django.views.generic import ListView, DetailView
+
 from src.store.models import Item, Category
-from src.store.serializer import ItemSerializer
+from rest_framework.viewsets import ViewSet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
-from cart.cart import Cart
+from django.contrib import messages
+
+from .mixins import DataMixin
+from .models import Cart
 
 
-class ItemViewSet(ViewSet):
-
-    def list(self, request):
-        items = Item.objects.filter(active_on=True)
-        serializer = ItemSerializer(items, many=True)
-        return Response({"items": serializer.data})
-
-
-def index(request):
-    items = Item.objects.filter(active_on=True)
-    categories = Category.objects.all
-    content = {
-            'items':items,
-            'categories':categories
+class IndexItemList(ListView, DataMixin):
+    model = Item
+    template_name = "index.html"
+    context_object_name = 'items'
+    extra_context = {
+        'title': 'Главная страница',
     }
-    return render(request, 'index.html', content)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        super(get_context_data)
+
+    def get_queryset(self):
+        return Item.objects.filter(is_show_on_index=True, active_on=True)
 
 
-def item_page(request, item_slug):
-    item = get_object_or_404(Item, slug=item_slug)
-    categories = Category.objects.all
+class ItemListInCategory(ListView):
+    template_name = "item_list.html"
+    context_object_name = 'items'
 
-    content = {
-        'item':item,
-        'categories':categories,
-        'price':item.price
-    }
-    return render(request, 'products/new_item.html', content)
+    def get_queryset(self):
+        return Item.objects.filter(category__id=self.request.GET('category_id', 0), active_on=True)
 
 
-def category_list(request, parent_slug):
-    parent = get_object_or_404(Category, slug=parent_slug)
-    categories = Category.objects.all
-    subcategories = Category.objects.filter(parent=parent)
-
-    content = {
-        'categories':categories,
-        'subcategories':subcategories,
-    }
-    return render(request, 'products/category_list.html', content)
+class ItemDetail(DetailView, DataMixin):
+    model = Item
+    template_name = 'products/new_item.html'
+    context_object_name = 'item'
+    slug_url_kwarg = 'item_slug'
 
 
-def item_list(request, parent_slug, category_slug):
-    category = get_object_or_404(Category, slug=category_slug)
-    items = Item.objects.filter(category=category)
-    categories = Category.objects.all
+class CategoryList(ListView, DataMixin):
+    model = Category
+    template_name = 'products/category_list.html'
+    context_object_name = 'item'
+    slug_url_kwarg = 'category_slug'
 
-    content = {
-        'categories':categories,
-        'items':items,
-    }
-    return render(request, 'products/item_list.html', content)
 
 ''' Управление корзиной '''
 
-@login_required(login_url="/users/signin")
-def cart_add(request, id):
-    cart = Cart(request)
-    product = Item.objects.get(id=id)
-    cart.add(product=product)
-    return redirect("/")
-
-
-@login_required(login_url="/users/signin")
-def item_clear(request, id):
-    cart = Cart(request)
-    product = Item.objects.get(id=id)
-    cart.remove(product)
-    return redirect("cart_detail")
-
-
-@login_required(login_url="/users/signin")
-def item_increment(request, id):
-    cart = Cart(request)
-    product = Item.objects.get(id=id)
-    cart.add(product=product)
-    return redirect("cart_detail")
-
-
-@login_required(login_url="/users/signin")
-def item_decrement(request, id):
-    cart = Cart(request)
-    product = Item.objects.get(id=id)
-    cart.decrement(product=product)
-    return redirect("cart_detail")
-
-
-@login_required(login_url="/users/signin")
-def cart_clear(request):
-    cart = Cart(request)
-    cart.clear()
-    return redirect("cart_detail")
-
-
-@login_required(login_url="/users/signin")
-def cart_detail(request):
-    categories = Category.objects.all
-
-    content = {
-        'categories':categories,
-    }
-    return render(request, 'products/cart_detail.html', content)
 
 @login_required
-def pay_with_robokassa(request, order_id):
-    order = get_object_or_404(Order, pk=order_id)
+def add_to_cart(request, product_id):
+    cart_item = Cart.objects.filter(user=request.user, product=product_id).first()
 
-    form = RobokassaForm(initial={
-               'OutSum': order.total,
-               'InvId': order.id,
-               'Desc': order.name,
-               'Email': request.user.email,
-               # 'IncCurrLabel': '',
-               # 'Culture': 'ru'
-           })
+    if cart_item:
+        cart_item.quantity += 1
+        cart_item.save()
+        messages.success(request, "Item added to your cart.")
+    else:
+        Cart.objects.create(user=request.user, product=product_id)
+        messages.success(request, "Item added to your cart.")
 
-    return render(request, 'pay_with_robokassa.html', {'form': form})
+    return redirect("cart:cart_detail")
+
+
+@login_required
+def remove_from_cart(request, cart_item_id):
+    cart_item = get_object_or_404(Cart, id=cart_item_id)
+
+    if cart_item.user == request.user:
+        cart_item.delete()
+        messages.success(request, "Item removed from your cart.")
+
+    return redirect("cart:cart_detail")
+
+
+@login_required
+def cart_detail(request):
+    cart_items = Cart.objects.filter(user=request.user)
+    total_price = sum(item.quantity * item.product.price for item in cart_items)
+
+    context = {
+        "cart_items": cart_items,
+        "total_price": total_price,
+    }
+
+    return render(request, "cart/cart_detail.html", context)

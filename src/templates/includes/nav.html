@@ -1,9 +1,13 @@
-<div class='nav'> 
+{% load thumbnail %}
+<div class='nav'>
      <div class = 'menu_buttons'>
         {% for category in categories%}
-        {% if not category.parent and category.icon %}
-        <a href='{% url 'parent_category' category.slug %}'>
-            <img src="/media/{{category.icon}}" alt="testimg">
+        {% if category.icon %}
+
+        <a href='{% url "content_category" category.slug %}'>
+        {% thumbnail category.icon "50x50" crop="center" as im %}
+            <img src="/media/{{im}}"  width="{{im.width}}" height="{{im.height}} alt="testimg">
+        {% endthumbnail %}
         </a>
         {% endif %}
 

@@ -5,7 +5,7 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-TEMPLATE_DEBUG=True
+TEMPLATE_DEBUG = True
 environ.Env.read_env()
 
 DEBUG = env.bool('DEBUG', default=False)
@@ -20,10 +20,9 @@ SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = ['*']
 
-
 INSTALLED_APPS = [
+    'material',
     'material.admin',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -38,10 +37,8 @@ INSTALLED_APPS = [
     'src.cmsblocks',
     'sorl.thumbnail',
     'rest_framework',
-    'tinymce',
     'mptt',
-    'cart',
-    'robokassa'
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -68,13 +65,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processor.cart_total_amount'
             ],
         },
     },
 ]
 
-CART_SESSION_ID = 'cart'
 WSGI_APPLICATION = 'config.wsgi.application'
 
 ERROR_LOG = env.str('ERROR_LOG', default=(BASE_DIR + '/settings/errors.log'))
@@ -122,7 +117,6 @@ LOGGING = {
 }
 
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -168,6 +162,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_REDIRECT_URL = '/'
 SITE_ID=1
 
-ROBOKASSA_LOGIN = 'test'
-ROBOKASSA_PASSWORD = '123'
-ROBOKASSA_PASSWORD1 = '123'
+#ROBOKASSA_LOGIN = 'test'
+#ROBOKASSA_PASSWORD = '123'
+#ROBOKASSA_PASSWORD1 = '123'
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'

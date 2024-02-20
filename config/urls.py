@@ -4,10 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static # new
 from django.contrib.auth.views import LogoutView
 from rest_framework import routers
-from src.store import views
 
 router = routers.DefaultRouter()
-router.register(r'itemset', views.ItemViewSet, basename='Item')
 
 urlpatterns = [
     path('api/', include(router.urls)),

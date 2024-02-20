@@ -6,8 +6,8 @@
     {% for category in subcategories %}
         <div class='market_item'>
             {% if category.image %}
-                {% thumbnail category.image "300x300" crop="center" as im %}
-                  <a href='{% url 'content_category' category.parent.slug category.slug %}'>
+                {% thumbnail category.image "30x30" crop="center" as im %}
+                  <a href='{% url "content_category" category.parent.slug category.slug %}'>
                     <img src="{{im.url}}" width="{{im.width}}" height="{{im.height}}">
                   </a>
                 {% endthumbnail %}

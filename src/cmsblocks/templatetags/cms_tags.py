@@ -16,8 +16,14 @@ def cms_template(name):
 @register.simple_tag()
 def logo():
     """Вставка логотипа сайта."""
-    logotype = SiteLogo.objects.all()[0]
-    return logotype.logo
+    try:
+        logotype = SiteLogo.objects.first()
+        if logotype is not None:
+            return logotype.logo
+        else:
+            print("Not found logo!")
+    finally:
+        pass
 
 
 @register.simple_tag()

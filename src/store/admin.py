@@ -6,11 +6,12 @@ from django.contrib.admin import ModelAdmin, register
 from django.conf import settings
 from .models import Item, Category
 
+
 @register(Item)
 class ItemAdmin(ModelAdmin):
-    list_display = ('name', 'slug', 'category','full_articel')
+    list_display = ('name', 'slug', 'category')
+
 
 @register(Category)
 class CategoryAdmin(ModelAdmin):
-    list_display = ('name', 'parent','articel')
-
+    list_display = ('name', 'parent')

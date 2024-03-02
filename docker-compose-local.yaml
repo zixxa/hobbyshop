@@ -1,0 +1,17 @@
+version: "3.0"
+services:
+  db:
+    container_name: "website_db"
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=webstore_db
+      - POSTGRES_PASSWORD=webstore_db
+      - POSTGRES_DB=webstore_db
+    ports:
+      - "5436:5432"
+    networks:
+      - custom
+networks:
+    custom:
+      driver: bridge

@@ -1,9 +1,9 @@
 from src.store.models import Category
 
 
-class DataMixin:
-    def get_context_data(self, *args, **kwargs):
+class ContextDataMixin:
+    def get_context_for_nav(self, *args, **kwargs):
         context = kwargs
-        context['categories'] = Category.objects.all()
+        context['nav_panel_categories'] = Category.objects.filter(is_show_on_index=True)
         return context
 

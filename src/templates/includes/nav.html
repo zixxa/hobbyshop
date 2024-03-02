@@ -1,7 +1,7 @@
 {% load thumbnail %}
 <div class='nav'>
      <div class = 'menu_buttons'>
-        {% for category in categories%}
+        {% for category in nav_panel_categories%}
         {% if category.icon %}
 
         <a href='{% url "content_category" category.slug %}'>

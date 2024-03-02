@@ -6,11 +6,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .mixins import DataMixin
+from .mixins import ContextDataMixin
 from .models import Cart
 
 
-class IndexItemList(ListView, DataMixin):
+class IndexItemList(ListView, ContextDataMixin):
     model = Item
     template_name = "index.html"
     context_object_name = 'items'
@@ -19,32 +19,54 @@ class IndexItemList(ListView, DataMixin):
     }
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        super(get_context_data)
+        context = super().get_context_data() | super().get_context_for_nav()
+        return context
 
     def get_queryset(self):
-        return Item.objects.filter(is_show_on_index=True, active_on=True)
+        return Item.publishes.get_index_objects()
 
 
-class ItemListInCategory(ListView):
-    template_name = "item_list.html"
+class ItemListInCategory(ListView, ContextDataMixin):
+    template_name = "products/item_list.html"
     context_object_name = 'items'
 
     def get_queryset(self):
-        return Item.objects.filter(category__id=self.request.GET('category_id', 0), active_on=True)
+        return Item.publishes.filter(category__slug=self.kwargs['category_slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data() | super().get_context_for_nav()
+        category = Category.publishes.filter(slug=self.kwargs['category_slug']).first()
+
+        context |= {
+            'title': category.name,
+        }
+        return context
 
 
-class ItemDetail(DetailView, DataMixin):
+class ItemDetail(DetailView, ContextDataMixin):
     model = Item
     template_name = 'products/new_item.html'
     context_object_name = 'item'
     slug_url_kwarg = 'item_slug'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data() | super().get_context_for_nav()
+        return context
 
-class CategoryList(ListView, DataMixin):
+
+class CategoryList(ListView, ContextDataMixin):
     model = Category
     template_name = 'products/category_list.html'
-    context_object_name = 'item'
+    context_object_name = 'category'
     slug_url_kwarg = 'category_slug'
+
+    extra_context = {
+        'title': 'Список категорий',
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data() | super().get_context_for_nav()
+        return context
 
 
 ''' Управление корзиной '''

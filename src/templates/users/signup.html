@@ -29,6 +29,11 @@
             </div>
           {% endif %}
         {% endfor %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div>{{message|safe}}</div>
+          {% endif %}
+        {% endfor %}
         <button type="submit">Зарегистрироваться</button>
     </form>
   </div>
